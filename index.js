@@ -9,6 +9,8 @@ const startButton = document.querySelector('#start-button')
 const closeButton = document.querySelector(".close-button");
 const message = document.querySelector("#message")
 const quizBody = document.querySelector('#quiz-body')
+// const listOfWinners = document.querySelector('header')
+const winnerBox = document.querySelector('#name-box')
 
 const ratingArray = []
 const showNameArray = []
@@ -52,7 +54,7 @@ closeButton.addEventListener('click',() => {
 
 //add event listener on the start/next button
 startButton.addEventListener('click', () => {
-    if(points < 5){
+    if(points < 2){
         //increment for each click
         clickCount += 1
         //populate content of the inital question
@@ -62,7 +64,7 @@ startButton.addEventListener('click', () => {
         pullRatings()
     }
     //if you hit 5 in a row on the ratings questions you go to the final question
-    if (points === 5) {
+    if (points === 2) {
         startButton.remove()
         /////////////////////////CREATE SECOND QUESTION////////////////////////
         //RNG a show
@@ -101,7 +103,8 @@ startButton.addEventListener('click', () => {
             e.preventDefault()
             if (+e.target['input-text'].value === +premiereYear) {
                 toggleModal()
-                message.textContent = 'YOU WIN'
+                winnerBox.style.visibility = 'visible'
+                message.textContent = 'YOU WIN, add your name to the list of winners!'
             } else if (+e.target['input-text'].value !== +premiereYear) {
                 toggleModal()
                 message.textContent = 'YOU LOSE'
@@ -163,7 +166,7 @@ function pullRatings(){
                 points ++
                 p.textContent = `Points: ${points}`
                 toggleModal()
-                if(points === 5) {
+                if(points === 2) {
                     message.textContent = 'CONGRATS, Continue to the final question'
                 } else {
                     message.textContent = 'CORRECT'
@@ -184,7 +187,7 @@ function pullRatings(){
                 points++
                 p.textContent = `Points: ${points}`
                 toggleModal()
-                if(points === 5) {
+                if(points === 2) {
                     message.textContent = 'CONGRATS, Continue to final questions'
                 } else {
                     message.textContent = 'CORRECT'
@@ -203,3 +206,39 @@ function pullRatings(){
 
 
 
+
+//////WINNERS BOARD//////
+const winnerList = document.querySelector('#winner-list')
+const url = 'http://localhost:3000/winners'
+
+fetch(url)
+.then(res => res.json())
+.then(winners => winners.forEach(winner => populateList(winner)))
+
+const populateList = (winner) => {
+    const li = document.createElement('li')
+    li.textContent = winner.name
+    winnerList.append(li)
+}
+
+
+
+winnerBox.addEventListener('submit', (e) => {
+    e.preventDefault()
+    const newName = e.target.name.value
+
+    fetch(url, {
+        method: 'POST',
+        headers : {
+            'Content-Type' : 'application/json'
+        },
+        body: JSON.stringify({
+            name : newName,
+
+        }),
+    })
+    .then(res => res.json())
+    .then(data => populateList(data))
+
+    winnerBox.reset()
+})

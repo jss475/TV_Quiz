@@ -5,12 +5,17 @@ h1 {
     /* position: static; */
 }
 
+
 header {
     display: flex;
     justify-content: flex-start;
-    flex-direction: row;
+    flex-direction: column;
     margin-top: 25px;
     position: fixed;
+}
+
+#name-box {
+    visibility: hidden;
 }
 
 
@@ -114,5 +119,7 @@ p {
     padding: 10px;
     background: white;
 }
+
+
 
 
