@@ -12,12 +12,10 @@
 
 <body>
     <header>
-        <form id="name-box">
-           <!-- <h3 id = "name-header">Your Name</h3> -->
+        <!-- <form id="name-box">
             <input type="text" id="name" placeholder="Type Your Name" />
             <input type="submit" id = "name-btn" value="Submit" />
-            <li>Joe</li>
-        </form>
+        </form> -->
     </header>
         
     <h1>TV Quiz</h1>
@@ -26,14 +24,16 @@
         <h3>Press Start To Begin</h3>
         <img id = "tv-image" >
         <br>
-        <button id="start-button">Start</button>
-        <br>
-        <div id = "answer-body">
-        <!-- <button id = "answer1"> <img id="imageAns1" height="250"/></button>
-        <button id = "answer2"> <img id="imageAns2" height="250"/></button>
-        <button id = "answer3" hidden> <img height="250"/></button>
-        <button id = "answer3" hidden> <img height="250"/></button> -->
+        <div class="modal">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h1 id="message"></h1>
+            </div>  
         </div>
+        <div id = "answer-body">
+        </div>
+        <br>
+        <button id="start-button">Start</button>
     </section>
 </body>
 </html>

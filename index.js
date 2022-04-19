@@ -2,22 +2,22 @@
 
 
 ////////////////////////Highest rating question////////////////////
-const answerOne = document.querySelector('#imageAns1')
-const answerTwo = document.querySelector('#imageAns2')
-const answerThree = document.querySelector('#answer3')
-const answerFour = document.querySelector('#answer4')
 const question = document.querySelector('#quiz-body h3')
 const answerBody = document.querySelector('#answer-body')
+const modal = document.querySelector('.modal')
+const startButton = document.querySelector('#start-button')
+const closeButton = document.querySelector(".close-button");
+const message = document.querySelector("#message")
+const quizBody = document.querySelector('#quiz-body')
 
-//let ratingArray = []
-// let showArray = []
 const ratingArray = []
 const showNameArray = []
 const genreArray = []
 const imageArray = []
-
-
 const showIdArray = []
+const premiereArray = []
+
+//////////////////////FETCH DATA FROM THE API/////////////////////////
 fetch('https://api.tvmaze.com/shows')
 .then(res => res.json())
 .then(shows => {
@@ -27,36 +27,95 @@ fetch('https://api.tvmaze.com/shows')
         showNameArray.push(show.name)
         genreArray.push(show.genres)
         imageArray.push(show.image.original)
+        premiereArray.push(show.premiered)
     })
 })
-
-// console.log(showIdArray)
-// console.log(ratingArray)
-// console.log(showNameArray)
-// console.log(genreArray)
-// console.log(imageArray)
+////////////////////////////////////////////////////
 
 
-
-
-
-const startButton = document.querySelector('#start-button')
 let clickCount = 0
-
 let p = document.querySelector('p')
 let points = 0
 p.textContent = `Points: ${points}`
 
 
 
+//function to toggle the visibility of the pop up
+function toggleModal() {
+    modal.classList.toggle("show-modal");
+}
+
+//add event listener for the close button on the pop up message
+closeButton.addEventListener('click',() => {
+    toggleModal()
+})
+
+//add event listener on the start/next button
 startButton.addEventListener('click', () => {
-    clickCount += 1
-    console.log(clickCount)
-    startButton.textContent = 'Next'
-    question.textContent = 'Which TV show has the highest rating?'
+    if(points < 5){
+        //increment for each click
+        clickCount += 1
+        //populate content of the inital question
+        startButton.textContent = 'Next'
+        question.textContent = 'Which TV show has the highest rating?'
+        //run function to pull ratings for the two shows
+        pullRatings()
+    }
+    //if you hit 5 in a row on the ratings questions you go to the final question
+    if (points === 5) {
+        startButton.remove()
+        /////////////////////////CREATE SECOND QUESTION////////////////////////
+        //RNG a show
+        let index = Math.ceil(Math.random()*showIdArray.length)
+        //create form to handle submit of typed in answer
+        const form = document.createElement('form')
+        form.id = "answer-form"
+        //create input field to enter text
+        const inputText = document.createElement('input')
+        inputText.id = "input-text"
+        inputText.type = "text"
+        inputText.placeholder = "Type in your answer :)"
+        form.append(inputText)
+        //create input field to click submit button
+        const inputSubmit = document.createElement('input')
+        inputSubmit.id = "answer-submit"
+        inputSubmit.type = "submit"
+        inputSubmit.textContent = "SUBMIT"
+        form.append(inputSubmit)
+        //change text of h3 content
+        const h3 = document.querySelector('#quiz-body h3')
+        h3.textContent = 'What year did this show premiere?'
+        //change image to have image appear
+        const img = document.querySelector('#tv-image')
+        img.src = imageArray[index]
+        //add form before the br
+        let br = document.querySelector('#quiz-body br')
+        quizBody.insertBefore(form,br)
+        //get year the show premiered
+        let premiereYear = premiereArray[index]
+        premiereYear = premiereYear.slice(0,4)
+        console.log(premiereYear)
+ 
+        //add event listener to the submit button and check if correct
+        form.addEventListener('submit', (e) => {
+            e.preventDefault()
+            if (+e.target['input-text'].value === +premiereYear) {
+                toggleModal()
+                message.textContent = 'YOU WIN'
+            } else if (+e.target['input-text'].value !== +premiereYear) {
+                toggleModal()
+                message.textContent = 'YOU LOSE'
+            }
+        })
+    }
+
+})
 
 
-    function pullRatings(){
+
+
+//function to pull ratings of the shows
+function pullRatings(){
         
         let a = Math.ceil(Math.random()*showIdArray.length)
         let b = Math.ceil(Math.random()*showIdArray.length)
@@ -69,8 +128,8 @@ startButton.addEventListener('click', () => {
             b = Math.ceil(Math.random()*showIdArray.length)
         }
         
-        
         const buttonOne = document.createElement('button')
+        buttonOne.className = 'btn'
         const imgOne = document.createElement('img')
         imgOne.height = '250'
         imgOne.src = imageArray[a]
@@ -78,6 +137,7 @@ startButton.addEventListener('click', () => {
         console.log(showNameArray[a])
 
         const buttonTwo = document.createElement('button')
+        buttonTwo.className = 'btn'
         const imgTwo = document.createElement('img')
         imgTwo.height = '250'
         imgTwo.src = imageArray[b]
@@ -85,122 +145,61 @@ startButton.addEventListener('click', () => {
         console.log(showNameArray[b])
         answerBody.append(buttonOne, buttonTwo)
 
+        const btns = document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                btn.style.background = 'magenta'
+            })
+            btn.addEventListener('mouseleave', () => {
+                btn.style.background = 'white'
+            })
+
+        })
+        
+
+
+
         buttonOne.addEventListener('click', (e) => {
             if (ratingArray[a] > ratingArray[b]) {
-                console.log('correct')
-                //let number = +points.textContent.slice(-1)
-                points++
-                console.log(points)
+                points ++
                 p.textContent = `Points: ${points}`
-                // number += 1
+                toggleModal()
+                if(points === 5) {
+                    message.textContent = 'CONGRATS, Continue to the final question'
+                } else {
+                    message.textContent = 'CORRECT'
+                }
+                
             } else {
-                console.log('wrong')
                 points = 0
                 p.textContent = `Points: ${points}`
+                toggleModal()
+                message.textContent = 'INCORRECT'
             }
-            console.log(ratingArray[a])
-            setTimeout(function(){
-                buttonOne.remove()
-                buttonTwo.remove()
-            },2000)
+            buttonOne.remove()
+            buttonTwo.remove()
         })
 
         buttonTwo.addEventListener('click', (e) => {
             if (ratingArray[b] > ratingArray[a]) {
-                console.log('correct')
-                //let number = +points.textContent.slice(-1)
                 points++
                 p.textContent = `Points: ${points}`
+                toggleModal()
+                if(points === 5) {
+                    message.textContent = 'CONGRATS, Continue to final questions'
+                } else {
+                    message.textContent = 'CORRECT'
+                }
             } else {
-                console.log('wrong')
                 points = 0
                 p.textContent = `Points: ${points}`
+                toggleModal()
+                message.textContent = 'INCORRECT'
 
             }
-            console.log(ratingArray[b])
-            setTimeout(function(){
-                buttonOne.remove()
-                buttonTwo.remove()
-            },2000)
+            buttonOne.remove()
+            buttonTwo.remove()
         })
     }
 
-    pullRatings()
-
-   
-    
-            
-                    
-                    // const button = document.createElement('button')
-                    // button.id = `answer${i+1}`
-                    // console.log(button)
-                    
-                    // const img = document.createElement('img')
-                    // img.height = '250'
-                    // img.src = data.image.original
-                    // button.append(img)
-                    // answerBody.append(button)
-
-                    // let maxRating = Math.max(...ratingArray)
-                    // let showIndex = ratingArray.indexOf(maxRating)
-                    // const maxShow = showArray[showIndex]
-                    // console.log(showArray)
-                    // console.log(ratingArray)
-                    // console.log(maxShow)
-
-                    
-
-                
 
 
-                    
-
-    
-    
-    
-
-
-})
-
-//initialize an array to store the ratings and show names into their own arrays
-//i.e ratingArray = [10, 9, 8.5, 9.5] 10 = rating for a1, 9 = rating for a2, ....
-//i.e showARray = [Glee, Pachinko, Last Kingdom, Simpsons] Glee = show name for a1, Pachinko = show name for a2
-
-
-
-
-// function pullRatings(){
-//     for(i = 0; i < 4; i++){
-//         let a = Math.ceil(Math.random()*100)
-//         fetch(`https://api.tvmaze.com/shows/${a}`)
-//             .then(res => res.json())
-//             .then(data => {
-//                 if(data.rating.average === null){
-//                     pullRatings()
-//                 }
-//                 ratingArray = [...ratingArray,data.rating.average]
-//                 showArray = [...showArray, data.name]
-//                 console.log(data.image.original)
-//                 debugger
-//                 imageAns1.src = data.image.original
-//             })
-//             .catch(error => console.log(error.message))
-//     }
-    
-//     setTimeout(function(){
-//         let maxRating = Math.max(...ratingArray)
-//         let showIndex = ratingArray.indexOf(maxRating)
-//         const maxShow = showArray[showIndex]
-//     },1000)
-// }
-
-
-// pullRatings()
-
-// if(i===0) {
-//     console.log(answerOne)
-//     answerOne.src = data.image.original
-// } else if (i ===1) {
-//     console.log(answerTwo)
-//     answerTwo.src = data.image.original
-//}
