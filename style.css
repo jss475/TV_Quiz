@@ -13,9 +13,18 @@ header {
     position: fixed;
 }
 
+
 #quiz-body {
-    text-align: center;
+    display: flex;
+    align-items: center;
     justify-content: center;
+    flex-direction: column;
+}
+
+#start-button {
+    width: 75px;
+    text-align: center;
+    cursor: pointer;
 }
 
 #tv-image {
@@ -31,6 +40,16 @@ header {
 #start-button {
     text-align: center;
     justify-content: center;
+}
+
+p {
+    text-align: right;
+    margin-right: 75px;
+    margin-top: -75px;
+}
+
+#name {
+    width: 100px;
 }
 
 

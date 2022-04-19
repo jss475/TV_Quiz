@@ -42,8 +42,16 @@ fetch('https://api.tvmaze.com/shows')
 
 const startButton = document.querySelector('#start-button')
 let clickCount = 0
+
+let p = document.querySelector('p')
+let points = 0
+p.textContent = `Points: ${points}`
+
+
+
 startButton.addEventListener('click', () => {
     clickCount += 1
+    console.log(clickCount)
     startButton.textContent = 'Next'
     question.textContent = 'Which TV show has the highest rating?'
 
@@ -80,6 +88,11 @@ startButton.addEventListener('click', () => {
         buttonOne.addEventListener('click', (e) => {
             if (ratingArray[a] > ratingArray[b]) {
                 console.log('correct')
+                //let number = +points.textContent.slice(-1)
+                points++
+                console.log(points)
+                p.textContent = `Points: ${points}`
+                // number += 1
             } else {
                 console.log('wrong')
             }
@@ -93,6 +106,9 @@ startButton.addEventListener('click', () => {
         buttonTwo.addEventListener('click', (e) => {
             if (ratingArray[b] > ratingArray[a]) {
                 console.log('correct')
+                //let number = +points.textContent.slice(-1)
+                points++
+                p.textContent = `Points: ${points}`
             } else {
                 console.log('wrong')
             }
