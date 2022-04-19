@@ -95,6 +95,8 @@ startButton.addEventListener('click', () => {
                 // number += 1
             } else {
                 console.log('wrong')
+                points = 0
+                p.textContent = `Points: ${points}`
             }
             console.log(ratingArray[a])
             setTimeout(function(){
@@ -111,6 +113,9 @@ startButton.addEventListener('click', () => {
                 p.textContent = `Points: ${points}`
             } else {
                 console.log('wrong')
+                points = 0
+                p.textContent = `Points: ${points}`
+
             }
             console.log(ratingArray[b])
             setTimeout(function(){
