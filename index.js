@@ -1,6 +1,6 @@
 //Create a sample question
 
-
+//test
 ////////////////////////Highest rating question////////////////////
 const question = document.querySelector('#quiz-body h3')
 const answerBody = document.querySelector('#answer-body')
