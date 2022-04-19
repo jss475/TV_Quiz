@@ -1,20 +1,20 @@
 //Create a sample question
 
-//
+
 ////////////////////////Highest rating question////////////////////
 const answerOne = document.querySelector('#imageAns1')
 const answerTwo = document.querySelector('#imageAns2')
 const answerThree = document.querySelector('#answer3')
 const answerFour = document.querySelector('#answer4')
+const quizBody = document.querySelector('#quiz-body')
 const question = document.querySelector('#quiz-body h3')
 const answerBody = document.querySelector('#answer-body')
 
-//let ratingArray = []
-// let showArray = []
 const ratingArray = []
 const showNameArray = []
 const genreArray = []
 const imageArray = []
+const premiereArray = []
 
 
 const showIdArray = []
@@ -27,6 +27,7 @@ fetch('https://api.tvmaze.com/shows')
         showNameArray.push(show.name)
         genreArray.push(show.genres)
         imageArray.push(show.image.original)
+        premiereArray.push(show.premiered)
     })
 })
 
@@ -42,144 +43,119 @@ fetch('https://api.tvmaze.com/shows')
 
 const startButton = document.querySelector('#start-button')
 let clickCount = 0
+
 startButton.addEventListener('click', () => {
+    if(clickCount === 0){
+        firstQ()
+    }else if (clickCount === 1){
+            //////////////////////////CREATE SECOND QUESTION////////////////////////
+
+        //RNG a show
+        let index = Math.ceil(Math.random()*showIdArray.length)
+        //create form to handle submit of typed in answer
+        const form = document.createElement('form')
+        form.id = "answer-form"
+
+        //create input field to enter text
+        const inputText = document.createElement('input')
+        inputText.id = "input-text"
+        inputText.type = "text"
+        inputText.placeholder = "Type in your answer :)"
+        form.append(inputText)
+        //create input field to click submit button
+        const inputSubmit = document.createElement('input')
+        inputSubmit.id = "answer-submit"
+        inputSubmit.type = "submit"
+        inputSubmit.textContent = "SUBMIT"
+        form.append(inputSubmit)
+
+        //change text of h3 content
+        const h3 = document.querySelector('#quiz-body h3')
+        h3.textContent = 'What year did this show premiere?'
+
+        //change image to have image appear
+        const img = document.querySelector('#tv-image')
+        img.src = imageArray[index]
+
+        //add form before the br
+        let br = document.querySelector('#quiz-body br')
+        quizBody.insertBefore(form,br)
+
+        //get year the show premiered
+        let premiereYear = premiereArray[index]
+        premiereYear = premiereYear.slice(0,4)
+        console.log(premiereYear)
+        debugger
+        //add event listener to the submit button
+        form.addEventListener('submit', (e) => {
+            e.preventDefault()
+        })
+    }
+})
+
+/////function to start first question//////////ß
+function firstQ(){
     clickCount += 1
     startButton.textContent = 'Next'
     question.textContent = 'Which TV show has the highest rating?'
-
-
-    function pullRatings(){
-        
-        let a = Math.ceil(Math.random()*showIdArray.length)
-        let b = Math.ceil(Math.random()*showIdArray.length)
-        while(ratingArray[a] === null || ratingArray[b] === null) {
-            a = Math.ceil(Math.random()*showIdArray.length)
-            b = Math.ceil(Math.random()*showIdArray.length)
-
-        }
-        while(ratingArray[a] === ratingArray[b]) {
-            b = Math.ceil(Math.random()*showIdArray.length)
-        }
-        
-        
-        const buttonOne = document.createElement('button')
-        const imgOne = document.createElement('img')
-        imgOne.height = '250'
-        imgOne.src = imageArray[a]
-        buttonOne.append(imgOne)
-        console.log(showNameArray[a])
-
-        const buttonTwo = document.createElement('button')
-        const imgTwo = document.createElement('img')
-        imgTwo.height = '250'
-        imgTwo.src = imageArray[b]
-        buttonTwo.append(imgTwo)
-        console.log(showNameArray[b])
-        answerBody.append(buttonOne, buttonTwo)
-
-        buttonOne.addEventListener('click', (e) => {
-            if (ratingArray[a] > ratingArray[b]) {
-                console.log('correct')
-            } else {
-                console.log('wrong')
-            }
-            console.log(ratingArray[a])
-            setTimeout(function(){
-                buttonOne.remove()
-                buttonTwo.remove()
-            },2000)
-        })
-
-        buttonTwo.addEventListener('click', (e) => {
-            if (ratingArray[b] > ratingArray[a]) {
-                console.log('correct')
-            } else {
-                console.log('wrong')
-            }
-            console.log(ratingArray[b])
-            setTimeout(function(){
-                buttonOne.remove()
-                buttonTwo.remove()
-            },2000)
-        })
-    }
-
     pullRatings()
+}
 
-   
-    
+
+
+////PULL RATINGS FUNCTION///////
+function pullRatings(){
             
-                    
-                    // const button = document.createElement('button')
-                    // button.id = `answer${i+1}`
-                    // console.log(button)
-                    
-                    // const img = document.createElement('img')
-                    // img.height = '250'
-                    // img.src = data.image.original
-                    // button.append(img)
-                    // answerBody.append(button)
+    let a = Math.ceil(Math.random()*showIdArray.length)
+    let b = Math.ceil(Math.random()*showIdArray.length)
+    while(ratingArray[a] === null || ratingArray[b] === null) {
+        a = Math.ceil(Math.random()*showIdArray.length)
+        b = Math.ceil(Math.random()*showIdArray.length)
 
-                    // let maxRating = Math.max(...ratingArray)
-                    // let showIndex = ratingArray.indexOf(maxRating)
-                    // const maxShow = showArray[showIndex]
-                    // console.log(showArray)
-                    // console.log(ratingArray)
-                    // console.log(maxShow)
-
-                    
-
-                
-
-
-                    
-
+    }
+    while(ratingArray[a] === ratingArray[b]) {
+        b = Math.ceil(Math.random()*showIdArray.length)
+    }
     
     
-    
+    const buttonOne = document.createElement('button')
+    const imgOne = document.createElement('img')
+    imgOne.height = '250'
+    imgOne.src = imageArray[a]
+    buttonOne.append(imgOne)
+    console.log(showNameArray[a])
 
+    const buttonTwo = document.createElement('button')
+    const imgTwo = document.createElement('img')
+    imgTwo.height = '250'
+    imgTwo.src = imageArray[b]
+    buttonTwo.append(imgTwo)
+    console.log(showNameArray[b])
+    answerBody.append(buttonOne, buttonTwo)
 
-})
+    buttonOne.addEventListener('click', (e) => {
+        if (ratingArray[a] > ratingArray[b]) {
+            console.log('correct')
+        } else {
+            console.log('wrong')
+        }
+        console.log(ratingArray[a])
+        setTimeout(function(){
+            buttonOne.remove()
+            buttonTwo.remove()
+        },2000)
+    })
 
-//initialize an array to store the ratings and show names into their own arrays
-//i.e ratingArray = [10, 9, 8.5, 9.5] 10 = rating for a1, 9 = rating for a2, ....
-//i.e showARray = [Glee, Pachinko, Last Kingdom, Simpsons] Glee = show name for a1, Pachinko = show name for a2
-
-
-
-
-// function pullRatings(){
-//     for(i = 0; i < 4; i++){
-//         let a = Math.ceil(Math.random()*100)
-//         fetch(`https://api.tvmaze.com/shows/${a}`)
-//             .then(res => res.json())
-//             .then(data => {
-//                 if(data.rating.average === null){
-//                     pullRatings()
-//                 }
-//                 ratingArray = [...ratingArray,data.rating.average]
-//                 showArray = [...showArray, data.name]
-//                 console.log(data.image.original)
-//                 debugger
-//                 imageAns1.src = data.image.original
-//             })
-//             .catch(error => console.log(error.message))
-//     }
-    
-//     setTimeout(function(){
-//         let maxRating = Math.max(...ratingArray)
-//         let showIndex = ratingArray.indexOf(maxRating)
-//         const maxShow = showArray[showIndex]
-//     },1000)
-// }
-
-
-// pullRatings()
-
-// if(i===0) {
-//     console.log(answerOne)
-//     answerOne.src = data.image.original
-// } else if (i ===1) {
-//     console.log(answerTwo)
-//     answerTwo.src = data.image.original
-//}
+    buttonTwo.addEventListener('click', (e) => {
+        if (ratingArray[b] > ratingArray[a]) {
+            console.log('correct')
+        } else {
+            console.log('wrong')
+        }
+        console.log(ratingArray[b])
+        setTimeout(function(){
+            buttonOne.remove()
+            buttonTwo.remove()
+        },2000)
+    })
+}
