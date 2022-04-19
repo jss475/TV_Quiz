@@ -1,6 +1,6 @@
 //Create a sample question
 
-
+//
 ////////////////////////Highest rating question////////////////////
 const answerOne = document.querySelector('#imageAns1')
 const answerTwo = document.querySelector('#imageAns2')
