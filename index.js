@@ -53,7 +53,7 @@ closeButton.addEventListener('click',() => {
 
 //add event listener on the start/next button
 startButton.addEventListener('click', () => {
-    if(points < 2){
+    if(points < 5){
         //increment for each click
         clickCount += 1
         //populate content of the inital question
@@ -63,11 +63,11 @@ startButton.addEventListener('click', () => {
         pullRatings()
     }
     //if you hit 5 in a row on the ratings questions you go to the final question
-    if (points === 2) {
+    if (points === 5) {
         startButton.remove()
         /////////////////////////CREATE SECOND QUESTION////////////////////////
         //RNG a show
-        let index = Math.ceil(Math.random()*showIdArray.length)
+        let index = Math.floor(Math.random()*showIdArray.length)
         //create form to handle submit of typed in answer
         const form = document.createElement('form')
         form.id = "answer-form"
@@ -165,7 +165,7 @@ function pullRatings(){
                 points ++
                 p.textContent = `Points: ${points}`
                 toggleModal()
-                if(points === 2) {
+                if(points === 5) {
                     message.textContent = 'CONGRATS, Continue to the final question'
                 } else {
                     message.textContent = 'CORRECT'
@@ -176,6 +176,8 @@ function pullRatings(){
                 p.textContent = `Points: ${points}`
                 toggleModal()
                 message.textContent = 'INCORRECT'
+                const loseIMG = document.createElement('img')
+                loseIMG.src = './game-over-v1.jpg'
             }
             buttonOne.remove()
             buttonTwo.remove()
@@ -186,7 +188,7 @@ function pullRatings(){
                 points++
                 p.textContent = `Points: ${points}`
                 toggleModal()
-                if(points === 2) {
+                if(points === 5) {
                     message.textContent = 'CONGRATS, Continue to final questions'
                 } else {
                     message.textContent = 'CORRECT'
@@ -196,6 +198,8 @@ function pullRatings(){
                 p.textContent = `Points: ${points}`
                 toggleModal()
                 message.textContent = 'INCORRECT'
+                const loseIMG = document.createElement('img')
+                loseIMG.src = './game-over-v1.jpg'
 
             }
             buttonOne.remove()
