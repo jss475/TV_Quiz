@@ -9,8 +9,7 @@ const startButton = document.querySelector('#start-button')
 const closeButton = document.querySelector(".close-button");
 const message = document.querySelector("#message")
 const quizBody = document.querySelector('#quiz-body')
-// const listOfWinners = document.querySelector('header')
-const winnerBox = document.querySelector('#name-box')
+
 
 const ratingArray = []
 const showNameArray = []
@@ -120,15 +119,15 @@ startButton.addEventListener('click', () => {
 //function to pull ratings of the shows
 function pullRatings(){
         
-        let a = Math.ceil(Math.random()*showIdArray.length)
-        let b = Math.ceil(Math.random()*showIdArray.length)
+        let a = Math.floor(Math.random()*showIdArray.length)
+        let b = Math.floor(Math.random()*showIdArray.length)
         while(ratingArray[a] === null || ratingArray[b] === null) {
-            a = Math.ceil(Math.random()*showIdArray.length)
-            b = Math.ceil(Math.random()*showIdArray.length)
+            a = Math.floor(Math.random()*showIdArray.length)
+            b = Math.floor(Math.random()*showIdArray.length)
 
         }
         while(ratingArray[a] === ratingArray[b]) {
-            b = Math.ceil(Math.random()*showIdArray.length)
+            b = Math.floor(Math.random()*showIdArray.length)
         }
         
         const buttonOne = document.createElement('button')
@@ -208,6 +207,7 @@ function pullRatings(){
 
 
 //////WINNERS BOARD//////
+const winnerBox = document.querySelector('#name-box')
 const winnerList = document.querySelector('#winner-list')
 const url = 'http://localhost:3000/winners'
 
