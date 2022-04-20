@@ -56,6 +56,10 @@ closeButton.addEventListener('click',() => {
 //add event listener on the start/next button
 startButton.addEventListener('click', () => {
     if(points < 2){
+        if(points === 0){
+            //hide the name submit 
+            winnerBox.style.visibility = 'hidden'
+        }
         //increment for each click
         clickCount += 1
         //populate content of the inital question
@@ -63,10 +67,12 @@ startButton.addEventListener('click', () => {
         question.textContent = 'Which TV show has the highest rating?'
         //run function to pull ratings for the two shows
         pullRatings()
+        //hide
     }
     //if you hit 5 in a row on the ratings questions you go to the final question
     if (points === 2) {
-        //startButton.remove()
+        //hide the start button
+        startButton.style.visibility = 'hidden'
         /////////////////////////CREATE SECOND QUESTION////////////////////////
         //RNG a show
         let index = Math.floor(Math.random()*showIdArray.length)
@@ -102,11 +108,18 @@ startButton.addEventListener('click', () => {
         //add event listener to the submit button and check if correct
         form.addEventListener('submit', (e) => {
             e.preventDefault()
+            
             if (+e.target['input-text'].value === +premiereYear) {
                 toggleModal()
                 loseIMG.src = ''
                 winnerBox.style.visibility = 'visible'
                 message.textContent = 'YOU WIN, add your name to the list of winners!'
+                startButton.textContent = 'RESTART'
+                points = 0
+                p.textContent = `Points: ${points}`
+                form.remove()
+                document.querySelector('#tv-image').src = ''
+                question.textContent = 'Please click RESTART'
             } else if (+e.target['input-text'].value !== +premiereYear) {
                 toggleModal()
                 message.textContent = ''
@@ -118,7 +131,9 @@ startButton.addEventListener('click', () => {
                 p.textContent = `Points: ${points}`
                 form.remove()
                 document.querySelector('#tv-image').src = ''
+                question.textContent = 'Please click RESTART'
             }
+            startButton.style.visibility = 'visible'
         })
     }
 
@@ -158,9 +173,11 @@ function pullRatings(){
         console.log(showNameArray[b])
         answerBody.append(buttonOne, buttonTwo)
 
+
+        ///MOUSEOVER EVENT///////
         const btns = document.querySelectorAll('.btn').forEach(btn => {
             btn.addEventListener('mouseenter', () => {
-                btn.style.background = 'magenta'
+                btn.style.background = header.style.background
             })
             btn.addEventListener('mouseleave', () => {
                 btn.style.background = 'white'
@@ -170,7 +187,7 @@ function pullRatings(){
         
 
 
-
+        //////BUTTON CLICK////////////////
         buttonOne.addEventListener('click', (e) => {
             if (ratingArray[a] > ratingArray[b]) {
                 points ++
@@ -179,12 +196,16 @@ function pullRatings(){
                 if(points === 2) {
                     loseIMG.src = ''
                     message.textContent = 'CONGRATS, Continue to the final question'
+                    question.textContent = 'Please click Next'
                 } else {
                     loseIMG.src = ''
                     message.textContent = 'CORRECT'
+                    question.textContent = 'Please click Next'
                 }
                 
             } else {
+                question.textContent = 'Please click RESTART'
+                startButton.textContent = 'RESTART'
                 loseIMG.src = ''
                 points = 0
                 p.textContent = `Points: ${points}`
@@ -207,12 +228,15 @@ function pullRatings(){
                 if(points === 2) {
                     loseIMG.src = ''
                     message.textContent = 'CONGRATS, Continue to final questions'
+                    question.textContent = 'Please click Next'
                 } else {
                     loseIMG.src = ''
                     message.textContent = 'CORRECT'
+                    question.textContent = 'Please click Next'
                 }
             } else {
-                //debugger
+                question.textContent = 'Please click RESTART'
+                startButton.textContent = 'RESTART'
                 loseIMG.src = ''
                 points = 0
                 p.textContent = `Points: ${points}`
@@ -229,8 +253,9 @@ function pullRatings(){
             buttonOne.remove()
             buttonTwo.remove()
         })
+        //////////////////////////
     }
-
+///////////////////////////////////////////////////
 
 
 
@@ -270,3 +295,20 @@ winnerBox.addEventListener('submit', (e) => {
 
     winnerBox.reset()
 })
+
+/////////////////////////////////////////////
+
+////////////////    CHANGE COLOR OF THE HEADER BACKGROUND BY RNG ////////////
+const hexNumbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F']
+const changeBtn = document.querySelector('#change-color')
+const header = document.querySelector('header')
+changeBtn.addEventListener('click', getHex)
+function getHex() {
+    let hexCol = "#";
+    for(let i = 0; i < 6; i++) {
+        let random = Math.floor(Math.random()* hexNumbers.length);
+        hexCol += hexNumbers[random];
+    }
+    header.style.background = hexCol;
+};
+///////////////////////////////////////
