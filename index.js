@@ -9,7 +9,7 @@ const startButton = document.querySelector('#start-button')
 const closeButton = document.querySelector(".close-button");
 const message = document.querySelector("#message")
 const quizBody = document.querySelector('#quiz-body')
-
+const modalContent = document.querySelector('.modal-content')
 
 const ratingArray = []
 const showNameArray = []
@@ -17,6 +17,8 @@ const genreArray = []
 const imageArray = []
 const showIdArray = []
 const premiereArray = []
+const loseIMG = document.createElement('img')
+modalContent.append(loseIMG)
 
 //////////////////////FETCH DATA FROM THE API/////////////////////////
 fetch('https://api.tvmaze.com/shows')
@@ -53,7 +55,7 @@ closeButton.addEventListener('click',() => {
 
 //add event listener on the start/next button
 startButton.addEventListener('click', () => {
-    if(points < 5){
+    if(points < 2){
         //increment for each click
         clickCount += 1
         //populate content of the inital question
@@ -63,8 +65,8 @@ startButton.addEventListener('click', () => {
         pullRatings()
     }
     //if you hit 5 in a row on the ratings questions you go to the final question
-    if (points === 5) {
-        startButton.remove()
+    if (points === 2) {
+        //startButton.remove()
         /////////////////////////CREATE SECOND QUESTION////////////////////////
         //RNG a show
         let index = Math.floor(Math.random()*showIdArray.length)
@@ -102,11 +104,20 @@ startButton.addEventListener('click', () => {
             e.preventDefault()
             if (+e.target['input-text'].value === +premiereYear) {
                 toggleModal()
+                loseIMG.src = ''
                 winnerBox.style.visibility = 'visible'
                 message.textContent = 'YOU WIN, add your name to the list of winners!'
             } else if (+e.target['input-text'].value !== +premiereYear) {
                 toggleModal()
-                message.textContent = 'YOU LOSE'
+                message.textContent = ''
+                loseIMG.src = 'YOU_FAIL.jpg'
+                loseIMG.width = '350'
+                startButton.textContent = 'RESTART'
+        
+                points = 0
+                p.textContent = `Points: ${points}`
+                form.remove()
+                document.querySelector('#tv-image').src = ''
             }
         })
     }
@@ -165,19 +176,24 @@ function pullRatings(){
                 points ++
                 p.textContent = `Points: ${points}`
                 toggleModal()
-                if(points === 5) {
+                if(points === 2) {
+                    loseIMG.src = ''
                     message.textContent = 'CONGRATS, Continue to the final question'
                 } else {
+                    loseIMG.src = ''
                     message.textContent = 'CORRECT'
                 }
                 
             } else {
+                loseIMG.src = ''
                 points = 0
                 p.textContent = `Points: ${points}`
                 toggleModal()
-                message.textContent = 'INCORRECT'
-                const loseIMG = document.createElement('img')
-                loseIMG.src = './game-over-v1.jpg'
+                message.textContent = ''
+                // const loseIMG = document.createElement('img')
+                loseIMG.src = 'game-over-v1.jpg'
+                loseIMG.width = '350'
+                
             }
             buttonOne.remove()
             buttonTwo.remove()
@@ -188,18 +204,26 @@ function pullRatings(){
                 points++
                 p.textContent = `Points: ${points}`
                 toggleModal()
-                if(points === 5) {
+                if(points === 2) {
+                    loseIMG.src = ''
                     message.textContent = 'CONGRATS, Continue to final questions'
                 } else {
+                    loseIMG.src = ''
                     message.textContent = 'CORRECT'
                 }
             } else {
+                //debugger
+                loseIMG.src = ''
                 points = 0
                 p.textContent = `Points: ${points}`
                 toggleModal()
-                message.textContent = 'INCORRECT'
-                const loseIMG = document.createElement('img')
-                loseIMG.src = './game-over-v1.jpg'
+                message.textContent = ''
+                
+                loseIMG.src = 'game-over-v1.jpg'
+                // loseIMG.height = 'auto'
+                loseIMG.width = '350'
+                // modalContent.append(loseIMG)
+
 
             }
             buttonOne.remove()
