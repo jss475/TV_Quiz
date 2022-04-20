@@ -123,7 +123,7 @@ startButton.addEventListener('click', () => {
             } else if (+e.target['input-text'].value !== +premiereYear) {
                 toggleModal()
                 message.textContent = ''
-                loseIMG.src = 'YOU_FAIL.jpg'
+                loseIMG.src = 'https://media1.giphy.com/media/sRMPFaVQLGSw8/giphy.gif?cid=790b761171c7d93a36e8a4013a0327e922079e3b8ae392e4&rid=giphy.gif&ct=g'
                 loseIMG.width = '350'
                 startButton.textContent = 'RESTART'
         
@@ -269,9 +269,9 @@ fetch(url)
 .then(winners => winners.forEach(winner => populateList(winner)))
 
 const populateList = (winner) => {
-    const li = document.createElement('li')
-    li.textContent = winner.name
-    winnerList.append(li)
+    const div = document.createElement('div')
+    div.innerHTML = `&#128250; ${winner.name}`
+    winnerList.append(div)
 }
 
 
