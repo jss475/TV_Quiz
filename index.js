@@ -54,6 +54,13 @@ closeButton.addEventListener('click',() => {
 
 //add event listener on the start/next button
 startButton.addEventListener('click', () => {
+    //remove instructions
+    clickCount += 1
+    if(clickCount === 1){
+        const h4 = document.querySelector('h4')
+        h4.remove()
+    }
+
     if(points < 2){
         if(points === 0){
             //hide the name submit 
@@ -182,8 +189,10 @@ function pullRatings(){
     answerBody.append(buttonOne, buttonTwo)
 
 
+    header.style.background = '#686868'
     ///MOUSEOVER EVENT///////
     const btns = document.querySelectorAll('.btn').forEach(btn => {
+        console.log(header.style.background)
         btn.addEventListener('mouseenter', () => {
             btn.style.background = header.style.background
         })
