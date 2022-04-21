@@ -35,7 +35,6 @@ fetch('https://api.tvmaze.com/shows')
 })
 ////////////////////////////////////////////////////
 
-
 let clickCount = 0
 let p = document.querySelector('p')
 let points = 0
@@ -194,9 +193,13 @@ function pullRatings(){
 
     })
 
-    const buttonHandler = () => {
+    const buttonHandler = (x, y) => {
         startButton.disabled = false
-        if (ratingArray[a] > ratingArray[b]) {
+        console.log(ratingArray[x])
+        console.log(showNameArray[x])
+        console.log(ratingArray[y])
+        console.log(showNameArray[y])
+        if (ratingArray[x] > ratingArray[y]) {
             points ++
             p.textContent = `Points: ${points}`
             toggleModal()
@@ -204,10 +207,17 @@ function pullRatings(){
                 loseIMG.src = ''
                 message.textContent = 'CONGRATS, Continue to the final question'
                 question.textContent = 'Please click Next'
+                modalContent.style.backgroundImage = ''
+                modalContent.style.height = ''
+                modalContent.style.width = '25rem'
             } else {
                 loseIMG.src = ''
                 message.textContent = 'CORRECT'
                 question.textContent = 'Please click Next'
+                modalContent.style.backgroundImage = ''
+                modalContent.style.height = ''
+                modalContent.style.width = '25rem'
+             
             }
             
         } else {
@@ -219,8 +229,11 @@ function pullRatings(){
             toggleModal()
             message.textContent = ''
             // const loseIMG = document.createElement('img')
-            loseIMG.src = 'game-over-v1.jpg'
-            loseIMG.width = '350'
+            modalContent.style.backgroundImage = "url('game-over-v1.jpg')"
+            modalContent.style.height = '300px'
+            modalContent.style.width = '300px'
+            //modalContent.style.backgroundSize = 'contain'
+
             
         }
         buttonOne.remove()
@@ -228,8 +241,8 @@ function pullRatings(){
     }
 
     //////BUTTON CLICK////////////////
-    buttonOne.addEventListener('click', buttonHandler)
-    buttonTwo.addEventListener('click', buttonHandler)
+    buttonOne.addEventListener('click', () => buttonHandler(a, b))
+    buttonTwo.addEventListener('click', () => buttonHandler(b, a))
     //////////////////////////
 }
 
