@@ -224,12 +224,11 @@ function pullRatings(){
                 modalContent.style.width = '25rem'
             } else {
                 loseIMG.src = ''
-                message.textContent = 'CORRECT'
+                //message.textContent = 'CORRECT'
                 question.textContent = 'Please click Next'
-                modalContent.style.backgroundImage = ''
-                modalContent.style.height = ''
-                modalContent.style.width = '25rem'
-             
+                modalContent.style.backgroundImage = "url('https://i.pinimg.com/originals/af/ff/52/afff522b4f568a7c897c8511b66dcb35.gif')"
+                modalContent.style.height = '358px'
+                modalContent.style.width = '420px'
             }
             
         } else {
