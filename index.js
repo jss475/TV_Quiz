@@ -67,7 +67,8 @@ startButton.addEventListener('click', () => {
         question.textContent = 'Which TV show has the highest rating?'
         //run function to pull ratings for the two shows
         pullRatings()
-        //hide
+        //disable start button
+        startButton.disabled = true
     }
     //if you hit 5 in a row on the ratings questions you go to the final question
     if (points === 2) {
@@ -139,126 +140,94 @@ startButton.addEventListener('click', () => {
 
 })
 
-
-
-
 //function to pull ratings of the shows
 function pullRatings(){
-        
-        let a = Math.floor(Math.random()*showIdArray.length)
-        let b = Math.floor(Math.random()*showIdArray.length)
-        while(ratingArray[a] === null || ratingArray[b] === null) {
-            a = Math.floor(Math.random()*showIdArray.length)
-            b = Math.floor(Math.random()*showIdArray.length)
 
-        }
-        while(ratingArray[a] === ratingArray[b]) {
-            b = Math.floor(Math.random()*showIdArray.length)
-        }
-        
-        const buttonOne = document.createElement('button')
-        buttonOne.className = 'btn'
-        //adding id
-        buttonOne.id = 'buttonOne'
-        const imgOne = document.createElement('img')
-        imgOne.height = '250'
-        imgOne.src = imageArray[a]
-        buttonOne.append(imgOne)
-        console.log(showNameArray[a])
-
-        const buttonTwo = document.createElement('button')
-        buttonTwo.className = 'btn'
-        //adding id
-        buttonTwo.id = 'buttonTwo'
-        const imgTwo = document.createElement('img')
-        imgTwo.height = '250'
-        imgTwo.src = imageArray[b]
-        buttonTwo.append(imgTwo)
-        console.log(showNameArray[b])
-        answerBody.append(buttonOne, buttonTwo)
-
-
-        ///MOUSEOVER EVENT///////
-        const btns = document.querySelectorAll('.btn').forEach(btn => {
-            btn.addEventListener('mouseenter', () => {
-                btn.style.background = header.style.background
-            })
-            btn.addEventListener('mouseleave', () => {
-                btn.style.background = 'white'
-            })
-
-        })
-        
-
-
-        //////BUTTON CLICK////////////////
-        buttonOne.addEventListener('click', (e) => {
-            if (ratingArray[a] > ratingArray[b]) {
-                points ++
-                p.textContent = `Points: ${points}`
-                toggleModal()
-                if(points === 2) {
-                    loseIMG.src = ''
-                    message.textContent = 'CONGRATS, Continue to the final question'
-                    question.textContent = 'Please click Next'
-                } else {
-                    loseIMG.src = ''
-                    message.textContent = 'CORRECT'
-                    question.textContent = 'Please click Next'
-                }
-                
-            } else {
-                question.textContent = 'Please click RESTART'
-                startButton.textContent = 'RESTART'
-                loseIMG.src = ''
-                points = 0
-                p.textContent = `Points: ${points}`
-                toggleModal()
-                message.textContent = ''
-                // const loseIMG = document.createElement('img')
-                loseIMG.src = 'game-over-v1.jpg'
-                loseIMG.width = '350'
-                
-            }
-            buttonOne.remove()
-            buttonTwo.remove()
-        })
-
-        buttonTwo.addEventListener('click', (e) => {
-            if (ratingArray[b] > ratingArray[a]) {
-                points++
-                p.textContent = `Points: ${points}`
-                toggleModal()
-                if(points === 2) {
-                    loseIMG.src = ''
-                    message.textContent = 'CONGRATS, Continue to final questions'
-                    question.textContent = 'Please click Next'
-                } else {
-                    loseIMG.src = ''
-                    message.textContent = 'CORRECT'
-                    question.textContent = 'Please click Next'
-                }
-            } else {
-                question.textContent = 'Please click RESTART'
-                startButton.textContent = 'RESTART'
-                loseIMG.src = ''
-                points = 0
-                p.textContent = `Points: ${points}`
-                toggleModal()
-                message.textContent = ''
-                
-                loseIMG.src = 'game-over-v1.jpg'
-                // loseIMG.height = 'auto'
-                loseIMG.width = '350'
-                // modalContent.append(loseIMG)
-
-
-            }
-            buttonOne.remove()
-            buttonTwo.remove()
-        })
-        //////////////////////////
+    //randomize two shows    
+    let a = Math.floor(Math.random()*showIdArray.length)
+    let b = Math.floor(Math.random()*showIdArray.length)
+    //make sure the shows data exists 
+    while(ratingArray[a] === null || ratingArray[b] === null) {
+        a = Math.floor(Math.random()*showIdArray.length)
+        b = Math.floor(Math.random()*showIdArray.length)
     }
+    //if the ratings of each show are the same, re-randomize show b
+    while(ratingArray[a] === ratingArray[b]) {
+        b = Math.floor(Math.random()*showIdArray.length)
+    }
+    
+    const buttonOne = document.createElement('button')
+    buttonOne.className = 'btn'
+    //adding id
+    buttonOne.id = 'buttonOne'
+    const imgOne = document.createElement('img')
+    imgOne.height = '250'
+    imgOne.src = imageArray[a]
+    buttonOne.append(imgOne)
+    console.log(showNameArray[a])
+
+    const buttonTwo = document.createElement('button')
+    buttonTwo.className = 'btn'
+    //adding id
+    buttonTwo.id = 'buttonTwo'
+    const imgTwo = document.createElement('img')
+    imgTwo.height = '250'
+    imgTwo.src = imageArray[b]
+    buttonTwo.append(imgTwo)
+    console.log(showNameArray[b])
+    answerBody.append(buttonOne, buttonTwo)
+
+
+    ///MOUSEOVER EVENT///////
+    const btns = document.querySelectorAll('.btn').forEach(btn => {
+        btn.addEventListener('mouseenter', () => {
+            btn.style.background = header.style.background
+        })
+        btn.addEventListener('mouseleave', () => {
+            btn.style.background = 'white'
+        })
+
+    })
+
+    const buttonHandler = () => {
+        startButton.disabled = false
+        if (ratingArray[a] > ratingArray[b]) {
+            points ++
+            p.textContent = `Points: ${points}`
+            toggleModal()
+            if(points === 2) {
+                loseIMG.src = ''
+                message.textContent = 'CONGRATS, Continue to the final question'
+                question.textContent = 'Please click Next'
+            } else {
+                loseIMG.src = ''
+                message.textContent = 'CORRECT'
+                question.textContent = 'Please click Next'
+            }
+            
+        } else {
+            question.textContent = 'Please click RESTART'
+            startButton.textContent = 'RESTART'
+            loseIMG.src = ''
+            points = 0
+            p.textContent = `Points: ${points}`
+            toggleModal()
+            message.textContent = ''
+            // const loseIMG = document.createElement('img')
+            loseIMG.src = 'game-over-v1.jpg'
+            loseIMG.width = '350'
+            
+        }
+        buttonOne.remove()
+        buttonTwo.remove()
+    }
+
+    //////BUTTON CLICK////////////////
+    buttonOne.addEventListener('click', buttonHandler)
+    buttonTwo.addEventListener('click', buttonHandler)
+    //////////////////////////
+}
+
 ///////////////////////////////////////////////////
 
 
@@ -316,3 +285,16 @@ function getHex() {
     header.style.background = hexCol;
 };
 ///////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////
