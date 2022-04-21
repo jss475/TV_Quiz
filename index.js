@@ -12,6 +12,10 @@ const quizBody = document.querySelector('#quiz-body')
 const modalContent = document.querySelector('.modal-content')
 
 
+let currentColor = ''
+
+
+
 const header = document.querySelector('header')
 
 const ratingArray = []
@@ -200,7 +204,7 @@ function pullRatings(){
     document.querySelectorAll('.btn').forEach(btn => {
         console.log(header.style.backgroundColor)
         btn.addEventListener('mouseenter', () => {
-            btn.style.backgroundColor = header.style.backgroundColor
+            btn.style.backgroundColor = currentColor
         })
         btn.addEventListener('mouseleave', () => {
             btn.style.backgroundColor = 'white'
@@ -304,6 +308,7 @@ winnerBox.addEventListener('submit', (e) => {
 /////////////////////////////////////////////
 
 ////////////////    CHANGE COLOR OF THE HEADER BACKGROUND BY RNG ////////////
+
 const hexNumbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F']
 const changeBtn = document.querySelector('#change-color')
 //const header = document.querySelector('header')
@@ -321,7 +326,9 @@ function getHex() {
         let random = Math.floor(Math.random()* hexNumbers.length);
         hexCol += hexNumbers[random];
     }
-    header.style.backgroundColor = hexCol;
+    currentColor = hexCol
+    console.log(currentColor)
+    header.style.backgroundImage = `linear-gradient(${hexCol}, white)`;
 };
 ///////////////////////////////////////
 
