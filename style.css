@@ -40,7 +40,7 @@ header {
     flex-direction: row;
     /* margin-top: 80px; */
     position: relative;
-    background: #686868;
+    background-color: white;
     padding: 20px;
     border:20px rgba(0, 0, 0, 0.5);
     border-radius: 10px;
@@ -153,13 +153,13 @@ h4 {
 /* ratings answer buttons */
 #buttonOne {
     padding: 10px;
-    background: white;
+    background-color: white;
     margin-left: -40%;
     /* margin-top: -200px; */
 }
 #buttonTwo {
     padding: 10px;
-    background: white;
+    background-color: white;
     margin-left: 0;
     /* margin-top: -10px; */
 }

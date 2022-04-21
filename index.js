@@ -11,6 +11,9 @@ const message = document.querySelector("#message")
 const quizBody = document.querySelector('#quiz-body')
 const modalContent = document.querySelector('.modal-content')
 
+
+const header = document.querySelector('header')
+
 const ratingArray = []
 const showNameArray = []
 const genreArray = []
@@ -189,15 +192,15 @@ function pullRatings(){
     answerBody.append(buttonOne, buttonTwo)
 
 
-    header.style.background = '#686868'
     ///MOUSEOVER EVENT///////
-    const btns = document.querySelectorAll('.btn').forEach(btn => {
-        console.log(header.style.background)
+    //const header = document.querySelector('header')
+    document.querySelectorAll('.btn').forEach(btn => {
+        console.log(header.style.backgroundColor)
         btn.addEventListener('mouseenter', () => {
-            btn.style.background = header.style.background
+            btn.style.backgroundColor = header.style.backgroundColor
         })
         btn.addEventListener('mouseleave', () => {
-            btn.style.background = 'white'
+            btn.style.backgroundColor = 'white'
         })
 
     })
@@ -301,7 +304,14 @@ winnerBox.addEventListener('submit', (e) => {
 ////////////////    CHANGE COLOR OF THE HEADER BACKGROUND BY RNG ////////////
 const hexNumbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'A', 'B', 'C', 'D', 'E', 'F']
 const changeBtn = document.querySelector('#change-color')
-const header = document.querySelector('header')
+//const header = document.querySelector('header')
+changeBtn.addEventListener('mouseenter', () => {
+    changeBtn.style.backgroundColor = 'white'
+})
+changeBtn.addEventListener('mouseleave', () => {
+    changeBtn.style.backgroundColor = '#1d1c1c'
+})
+
 changeBtn.addEventListener('click', getHex)
 function getHex() {
     let hexCol = "#";
@@ -309,7 +319,7 @@ function getHex() {
         let random = Math.floor(Math.random()* hexNumbers.length);
         hexCol += hexNumbers[random];
     }
-    header.style.background = hexCol;
+    header.style.backgroundColor = hexCol;
 };
 ///////////////////////////////////////
 
