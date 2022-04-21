@@ -115,7 +115,8 @@ h3 {
 
 #tv-image {
     text-align: center;
-    width: 200px;
+    margin-left: -20%;
+    width: 170px;
 }
 
 #answer-body {
@@ -136,6 +137,11 @@ h3 {
 #name {
     width: 100px;
 }
+
+#answer-form {
+    margin-left: -20%
+}
+
 
 /* ratings answer buttons */
 #buttonOne {
