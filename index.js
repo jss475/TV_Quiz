@@ -120,7 +120,10 @@ startButton.addEventListener('click', () => {
                 toggleModal()
                 loseIMG.src = ''
                 winnerBox.style.visibility = 'visible'
-                message.textContent = 'YOU WIN, add your name to the list of winners!'
+                message.textContent = 'Add your name to the list of winners!'
+                modalContent.style.backgroundImage = "url('https://c.tenor.com/qNPpRT04stcAAAAC/you-won-willy-wonka-and-the-chocolate-factory.gif')"
+                modalContent.style.height = '280px'
+                modalContent.style.width = '498px'
                 startButton.textContent = 'RESTART'
                 points = 0
                 p.textContent = `Points: ${points}`
