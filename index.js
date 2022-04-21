@@ -67,7 +67,8 @@ startButton.addEventListener('click', () => {
         question.textContent = 'Which TV show has the highest rating?'
         //run function to pull ratings for the two shows
         pullRatings()
-        //hide
+        //disable the next button
+        startButton.disabled = true
     }
     //if you hit 5 in a row on the ratings questions you go to the final question
     if (points === 2) {
@@ -193,6 +194,8 @@ function pullRatings(){
 
         //////BUTTON CLICK////////////////
         buttonOne.addEventListener('click', (e) => {
+            //make next button clickable
+            startButton.disabled = false
             if (ratingArray[a] > ratingArray[b]) {
                 points ++
                 p.textContent = `Points: ${points}`
@@ -225,6 +228,8 @@ function pullRatings(){
         })
 
         buttonTwo.addEventListener('click', (e) => {
+            //make next button clickable
+            startButton.disabled = false
             if (ratingArray[b] > ratingArray[a]) {
                 points++
                 p.textContent = `Points: ${points}`
