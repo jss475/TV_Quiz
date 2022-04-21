@@ -124,8 +124,13 @@ startButton.addEventListener('click', () => {
             } else if (+e.target['input-text'].value !== +premiereYear) {
                 toggleModal()
                 message.textContent = ''
-                loseIMG.src = 'https://media1.giphy.com/media/sRMPFaVQLGSw8/giphy.gif?cid=790b761171c7d93a36e8a4013a0327e922079e3b8ae392e4&rid=giphy.gif&ct=g'
-                loseIMG.width = '350'
+                //changing to have losing image show up in popup
+                //loseIMG.src = 'https://media1.giphy.com/media/sRMPFaVQLGSw8/giphy.gif?cid=790b761171c7d93a36e8a4013a0327e922079e3b8ae392e4&rid=giphy.gif&ct=g'
+                //loseIMG.width = '350'
+                modalContent.style.backgroundImage = "url('https://media1.giphy.com/media/sRMPFaVQLGSw8/giphy.gif?cid=790b761171c7d93a36e8a4013a0327e922079e3b8ae392e4&rid=giphy.gif&ct=g')"
+                modalContent.style.height = '270px'
+                modalContent.style.width = '450px'
+                //modalContent.style.backgroundSize = 'cover'
                 startButton.textContent = 'RESTART'
         
                 points = 0
