@@ -158,6 +158,8 @@ function pullRatings(){
         
         const buttonOne = document.createElement('button')
         buttonOne.className = 'btn'
+        //adding id
+        buttonOne.id = 'buttonOne'
         const imgOne = document.createElement('img')
         imgOne.height = '250'
         imgOne.src = imageArray[a]
@@ -166,6 +168,8 @@ function pullRatings(){
 
         const buttonTwo = document.createElement('button')
         buttonTwo.className = 'btn'
+        //adding id
+        buttonTwo.id = 'buttonTwo'
         const imgTwo = document.createElement('img')
         imgTwo.height = '250'
         imgTwo.src = imageArray[b]
