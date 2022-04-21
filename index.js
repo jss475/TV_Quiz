@@ -229,9 +229,9 @@ function pullRatings(){
                 loseIMG.src = ''
                 //message.textContent = 'CORRECT'
                 question.textContent = 'Please click Next'
-                modalContent.style.backgroundImage = "url('https://i.pinimg.com/originals/af/ff/52/afff522b4f568a7c897c8511b66dcb35.gif')"
-                modalContent.style.height = '358px'
-                modalContent.style.width = '420px'
+                modalContent.style.backgroundImage = "url('https://acegif.com/wp-content/uploads/gif-good-job-80.gif')"
+                modalContent.style.height = '400px'
+                modalContent.style.width = '500px'
             }
             
         } else {
