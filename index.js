@@ -10,7 +10,7 @@ const closeButton = document.querySelector(".close-button");
 const message = document.querySelector("#message")
 const quizBody = document.querySelector('#quiz-body')
 const modalContent = document.querySelector('.modal-content')
-
+const ratingAnswer = document.querySelector('#rating-answer')
 
 let currentColor = ''
 
@@ -24,6 +24,8 @@ const genreArray = []
 const imageArray = []
 const showIdArray = []
 const premiereArray = []
+let finalIndex1
+let finalIndex2
 const loseIMG = document.createElement('img')
 modalContent.append(loseIMG)
 
@@ -57,11 +59,13 @@ function toggleModal() {
 //add event listener for the close button on the pop up message
 closeButton.addEventListener('click',() => {
     toggleModal()
+    ratingAnswer.innerHTML += `<span>${showNameArray[finalIndex1]}:</span> <span>${ratingArray[finalIndex1]}</span> <br> <br> <br> <span>${showNameArray[finalIndex2]}:</span> <span>${ratingArray[finalIndex2]}</span>`
 })
 
 //add event listener on the start/next button
 startButton.addEventListener('click', () => {
     //remove instructions
+    ratingAnswer.innerHTML = ''
     clickCount += 1
     if(clickCount === 1){
         const h4 = document.querySelector('h4')
@@ -139,7 +143,7 @@ startButton.addEventListener('click', () => {
                 question.textContent = 'Please click RESTART'
             } else if (+e.target['input-text'].value !== +premiereYear) {
                 toggleModal()
-                message.textContent = ''
+                message.textContent = premiereYear
                 //changing to have losing image show up in popup
                 //loseIMG.src = 'https://media1.giphy.com/media/sRMPFaVQLGSw8/giphy.gif?cid=790b761171c7d93a36e8a4013a0327e922079e3b8ae392e4&rid=giphy.gif&ct=g'
                 //loseIMG.width = '350'
@@ -213,6 +217,9 @@ function pullRatings(){
     })
 
     const buttonHandler = (x, y) => {
+    
+        finalIndex1 = x
+        finalIndex2 = y
         startButton.disabled = false
         console.log(ratingArray[x])
         console.log(showNameArray[x])
@@ -254,6 +261,7 @@ function pullRatings(){
 
             
         }
+        
         buttonOne.remove()
         buttonTwo.remove()
     }
