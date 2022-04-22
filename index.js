@@ -65,6 +65,8 @@ closeButton.addEventListener('click',() => {
 //add event listener on the start/next button
 startButton.addEventListener('click', () => {
     //remove instructions
+    const body = document.querySelector('body')
+    body.style.backgroundImage = "url('')"
     ratingAnswer.innerHTML = ''
     clickCount += 1
     if(clickCount === 1){
