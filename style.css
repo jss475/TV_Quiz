@@ -170,6 +170,23 @@ h4 {
 }
 
 
+/* this is for showing the answer to the ratings */
+#rating-answer {
+    margin-top: -10%;
+    margin-left: 81%;
+    color: white;
+    background-color: black;
+    border-radius: 5px;
+    /* padding: 2px; */
+    width: 130px;
+}
+
+span {
+    font-size: 20px;
+}
+/*  */
+
+
 /* ratings answer buttons */
 #buttonOne {
     padding: 10px;
