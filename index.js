@@ -59,7 +59,7 @@ function toggleModal() {
 //add event listener for the close button on the pop up message
 closeButton.addEventListener('click',() => {
     toggleModal()
-    ratingAnswer.innerHTML += `<span>${showNameArray[finalIndex1]}:</span> <span>${ratingArray[finalIndex1]}</span> <br> <br> <br> <span>${showNameArray[finalIndex2]}:</span> <span>${ratingArray[finalIndex2]}</span>`
+    ratingAnswer.innerHTML += `<span>${showNameArray[finalIndex1]}:</span> <span>${ratingArray[finalIndex1]}</span> <br> <br> <span>${showNameArray[finalIndex2]}:</span> <span>${ratingArray[finalIndex2]}</span>`
 })
 
 //add event listener on the start/next button
@@ -74,7 +74,7 @@ startButton.addEventListener('click', () => {
         h4.remove()
     }
 
-    if(points < 2){
+    if(points < 3){
         if(points === 0){
             //hide the name submit 
             winnerBox.style.visibility = 'hidden'
