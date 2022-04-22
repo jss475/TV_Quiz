@@ -90,7 +90,7 @@ startButton.addEventListener('click', () => {
         startButton.disabled = true
     }
     //if you hit 5 in a row on the ratings questions you go to the final question
-    if (points === 2) {
+    if (points === 3) {
         //hide the start button
         startButton.style.visibility = 'hidden'
         /////////////////////////CREATE SECOND QUESTION////////////////////////
@@ -231,7 +231,7 @@ function pullRatings(){
             points ++
             p.textContent = `Points: ${points}`
             toggleModal()
-            if(points === 2) {
+            if(points === 3) {
                 loseIMG.src = ''
                 message.textContent = 'CONGRATS, Continue to the final question'
                 question.textContent = 'Please click Next'
