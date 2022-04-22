@@ -47,6 +47,7 @@ fetch('https://api.tvmaze.com/shows')
 let clickCount = 0
 let p = document.querySelector('p')
 let points = 0
+let pointsWin = 0
 p.textContent = `Points: ${points}`
 
 
@@ -60,6 +61,11 @@ function toggleModal() {
 closeButton.addEventListener('click',() => {
     toggleModal()
     ratingAnswer.innerHTML += `<span>${showNameArray[finalIndex1]}:</span> <span>${ratingArray[finalIndex1]}</span> <br> <br> <span>${showNameArray[finalIndex2]}:</span> <span>${ratingArray[finalIndex2]}</span>`
+    if(pointsWin > 3){
+        ratingAnswer.innerHTML = ''
+        pointsWin = 0
+        message.textContent = ''
+    }
 })
 
 //add event listener on the start/next button
@@ -127,7 +133,9 @@ startButton.addEventListener('click', () => {
  
         //add event listener to the submit button and check if correct
         form.addEventListener('submit', (e) => {
+            ratingAnswer.innerHTML = ''
             e.preventDefault()
+            pointsWin = 5
             
             if (+e.target['input-text'].value === +premiereYear) {
                 toggleModal()
@@ -154,7 +162,6 @@ startButton.addEventListener('click', () => {
                 modalContent.style.width = '450px'
                 //modalContent.style.backgroundSize = 'cover'
                 startButton.textContent = 'RESTART'
-        
                 points = 0
                 p.textContent = `Points: ${points}`
                 form.remove()
@@ -229,6 +236,7 @@ function pullRatings(){
         console.log(showNameArray[y])
         if (ratingArray[x] > ratingArray[y]) {
             points ++
+            pointsWin++
             p.textContent = `Points: ${points}`
             toggleModal()
             if(points === 3) {
@@ -252,6 +260,7 @@ function pullRatings(){
             startButton.textContent = 'RESTART'
             loseIMG.src = ''
             points = 0
+            pointsWin = 0
             p.textContent = `Points: ${points}`
             toggleModal()
             message.textContent = ''
