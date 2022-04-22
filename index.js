@@ -224,59 +224,6 @@ function pullRatings(){
         })
 
     })
-
-    const buttonHandler = (x, y) => {
-    
-        finalIndex1 = x
-        finalIndex2 = y
-        startButton.disabled = false
-        console.log(ratingArray[x])
-        console.log(showNameArray[x])
-        console.log(ratingArray[y])
-        console.log(showNameArray[y])
-        if (ratingArray[x] > ratingArray[y]) {
-            points ++
-            pointsWin++
-            p.textContent = `Points: ${points}`
-            toggleModal()
-            if(points === 3) {
-                loseIMG.src = ''
-                message.textContent = 'CONGRATS, Continue to the final question'
-                question.textContent = 'Please click Next'
-                modalContent.style.backgroundImage = ''
-                modalContent.style.height = ''
-                modalContent.style.width = '25rem'
-            } else {
-                loseIMG.src = ''
-                //message.textContent = 'CORRECT'
-                question.textContent = 'Please click Next'
-                modalContent.style.backgroundImage = "url('https://acegif.com/wp-content/uploads/gif-good-job-80.gif')"
-                modalContent.style.height = '400px'
-                modalContent.style.width = '500px'
-            }
-            
-        } else {
-            question.textContent = 'Please click RESTART'
-            startButton.textContent = 'RESTART'
-            loseIMG.src = ''
-            points = 0
-            pointsWin = 0
-            p.textContent = `Points: ${points}`
-            toggleModal()
-            message.textContent = ''
-            // const loseIMG = document.createElement('img')
-            modalContent.style.backgroundImage = "url('game-over-v1.jpg')"
-            modalContent.style.height = '300px'
-            modalContent.style.width = '300px'
-            //modalContent.style.backgroundSize = 'contain'
-
-            
-        }
-        
-        buttonOne.remove()
-        buttonTwo.remove()
-    }
-
     //////BUTTON CLICK////////////////
     buttonOne.addEventListener('click', () => buttonHandler(a, b))
     buttonTwo.addEventListener('click', () => buttonHandler(b, a))
@@ -284,6 +231,61 @@ function pullRatings(){
 }
 
 ///////////////////////////////////////////////////
+
+
+////// Function to create button handler/////////
+const buttonHandler = (x, y) => {
+    
+    finalIndex1 = x
+    finalIndex2 = y
+    startButton.disabled = false
+    console.log(ratingArray[x])
+    console.log(showNameArray[x])
+    console.log(ratingArray[y])
+    console.log(showNameArray[y])
+    if (ratingArray[x] > ratingArray[y]) {
+        points ++
+        pointsWin++
+        p.textContent = `Points: ${points}`
+        toggleModal()
+        if(points === 3) {
+            loseIMG.src = ''
+            message.textContent = 'CONGRATS, Continue to the final question'
+            question.textContent = 'Please click Next'
+            modalContent.style.backgroundImage = ''
+            modalContent.style.height = ''
+            modalContent.style.width = '25rem'
+        } else {
+            loseIMG.src = ''
+            //message.textContent = 'CORRECT'
+            question.textContent = 'Please click Next'
+            modalContent.style.backgroundImage = "url('https://acegif.com/wp-content/uploads/gif-good-job-80.gif')"
+            modalContent.style.height = '400px'
+            modalContent.style.width = '500px'
+        }
+        
+    } else {
+        question.textContent = 'Please click RESTART'
+        startButton.textContent = 'RESTART'
+        loseIMG.src = ''
+        points = 0
+        pointsWin = 0
+        p.textContent = `Points: ${points}`
+        toggleModal()
+        message.textContent = ''
+        // const loseIMG = document.createElement('img')
+        modalContent.style.backgroundImage = "url('game-over-v1.jpg')"
+        modalContent.style.height = '300px'
+        modalContent.style.width = '300px'
+        //modalContent.style.backgroundSize = 'contain'
+
+        
+    }
+    
+    buttonOne.remove()
+    buttonTwo.remove()
+}
+///////
 
 
 
