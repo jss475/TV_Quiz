@@ -234,16 +234,13 @@ function pullRatings(){
 
 
 ////// Function to create button handler/////////
-const buttonHandler = (x, y) => {
+const buttonHandler = (show1, show2) => {
     
-    finalIndex1 = x
-    finalIndex2 = y
+    finalIndex1 = show1
+    finalIndex2 = show2
     startButton.disabled = false
-    console.log(ratingArray[x])
-    console.log(showNameArray[x])
-    console.log(ratingArray[y])
-    console.log(showNameArray[y])
-    if (ratingArray[x] > ratingArray[y]) {
+
+    if (ratingArray[show1] > ratingArray[show2]) {
         points ++
         pointsWin++
         p.textContent = `Points: ${points}`
