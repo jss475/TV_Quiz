@@ -24,6 +24,8 @@ const genreArray = []
 const imageArray = []
 const showIdArray = []
 const premiereArray = []
+let finalIndex1
+let finalIndex2
 const loseIMG = document.createElement('img')
 modalContent.append(loseIMG)
 
@@ -57,6 +59,7 @@ function toggleModal() {
 //add event listener for the close button on the pop up message
 closeButton.addEventListener('click',() => {
     toggleModal()
+    ratingAnswer.innerHTML += `<span>${showNameArray[finalIndex1]}:</span> <span>${ratingArray[finalIndex1]}</span> <br> <br> <br> <span>${showNameArray[finalIndex2]}:</span> <span>${ratingArray[finalIndex2]}</span>`
 })
 
 //add event listener on the start/next button
@@ -215,7 +218,8 @@ function pullRatings(){
 
     const buttonHandler = (x, y) => {
     
-        ratingAnswer.innerHTML += `<span>${showNameArray[x]}:</span> <span>${ratingArray[x]}</span> <br> <br> <br> <span>${showNameArray[y]}:</span> <span>${ratingArray[y]}</span>`
+        finalIndex1 = x
+        finalIndex2 = y
         startButton.disabled = false
         console.log(ratingArray[x])
         console.log(showNameArray[x])
@@ -257,6 +261,7 @@ function pullRatings(){
 
             
         }
+        
         buttonOne.remove()
         buttonTwo.remove()
     }
